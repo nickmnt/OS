@@ -1,16 +1,12 @@
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
-void main(){
-
-    //dummy input
-    char *string = "afklakgKHSFLgasfaf"; 
-    printf("\nDecoder run .");
-
-    decodeAndWrite(string);
-}
-
-void decodeAndWrite(char *str){
+void decodeAndWrite(char *str, char * decoderFinder){
     int counter ;
     char result[strlen(str)];
 
@@ -24,5 +20,27 @@ void decodeAndWrite(char *str){
     }
 
     //output
-    printf("\n\n%s" , result);
+    int fd = open(decoderFinder, O_WRONLY);
+    write(fd, result, strlen(result)+1);
+
+    //printf("\n\n%s" , result);
+}
+
+void main(){
+    char * motherDecoder = "/tmp/fifo1";
+    mkfifo(motherDecoder, 0666);
+
+    char * decoderFinder = "/tmp/fifo4";
+    mkfifo(decoderFinder, 0666);
+
+    char arr1[10000];
+    int fd = open(motherDecoder, O_RDONLY);
+    read(fd, arr1, sizeof(arr1));
+
+    //dummy input
+    //char *string = "afklakgKHSFLgasfaf"; 
+    char *string = arr1; 
+    printf("\nDecoder run .");
+
+    decodeAndWrite(string, decoderFinder);
 }
