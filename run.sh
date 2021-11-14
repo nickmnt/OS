@@ -1,3 +1,5 @@
+mkdir -p Build
+
 #bulid
 gcc -o ./Build/placer placer.c
 gcc -o ./Build/finder finder.c
