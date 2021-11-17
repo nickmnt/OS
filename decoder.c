@@ -6,11 +6,35 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+void setToSingleLine(char *str){
+    int i , j, len = strlen(str);
+    for(i = 0 ; i < len ; i++){
+        if(str[i] == '\n')
+		{
+			for(j = i; j < len; j++)
+			{
+				str[j] = str[j + 1];
+			}
+			len--;
+			i--;	
+		}
+    }
+}
+
 void decodeAndWrite(char *str, char * decoderFinder){
     int counter ;
-    char result[strlen(str)];
 
-    for(counter = 0 ; counter < strlen(str) ; counter++){
+    puts(str);
+    puts("before");
+
+    setToSingleLine(str);
+
+    puts("after");
+    puts(str);
+
+    char result[strlen(str)-1];
+
+    for(counter = 0 ; counter < strlen(str); counter++){
         if(str[counter] >= 'a' && str[counter] <= 'z'){
             result[counter] = (str[counter]-'a'-3+26)%26+'a';
         }
@@ -19,11 +43,12 @@ void decodeAndWrite(char *str, char * decoderFinder){
         }
     }
 
+    puts(result);
+
     //output
     int fd = open(decoderFinder, O_WRONLY);
     write(fd, result, strlen(result)+1);
 
-    //printf("\n\n%s" , result);
 }
 
 void main(){
@@ -42,5 +67,5 @@ void main(){
     char *string = arr1; 
     printf("\nDecoder run .");
 
-    decodeAndWrite(string, decoderFinder);
+    decodeAndWrite("abc\ndef", decoderFinder);
 }
