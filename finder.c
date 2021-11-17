@@ -6,6 +6,46 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+void splitNumbers(char *str , char *str2){
+    
+    int count = 0 , j = 0 , i;
+    char result[1000][10] ;
+    for(i = 0 ; i < strlen(str) ; i++){
+        if(str[i] == '$' || str[i] == '\0'){
+            result[count][j] = '\0';
+            count++;
+            j = 0;
+        }
+        else{
+            result[count][j] = str[i];
+            j++;
+        }
+    }
+
+    int resCounter = 0 ;
+    char words[strlen(str2)];
+
+    for(i = 0 ; i < count ; i++){
+        char *split1 = strtok(result[i] , " ");
+        char *split2 = strtok(NULL , " ");
+
+        int startIdx = atoi(split1);
+        int length = atoi(split2);
+
+        int endIndex = length + startIdx , k  , l = 0;
+
+        for(k = startIdx ; k < endIndex ; k++ ){
+            words[resCounter] = str2[k];
+            resCounter++;
+        }
+        words[resCounter] = ' ';
+        resCounter++;
+    }
+
+    //send words to placer with pipe
+    puts(words);
+}
+
 int main() {
     char * motherFinder = "/tmp/fifo2";
     mkfifo(motherFinder, 0666);
@@ -26,5 +66,8 @@ int main() {
     close(fd);
 
     printf("\nFinder finished reading from decoder\n");
-    printf("%s\n",arr2);
+
+    char *string = arr1 , *string2 = arr2;
+
+    splitNumbers(string , string2);
 }
