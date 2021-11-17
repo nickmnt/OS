@@ -6,6 +6,17 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+void writeInFile(char *str){
+    FILE *file ;
+    file = fopen("../decoderResult.txt" , "w");
+
+    if(file != NULL){
+        fputs(str , file);
+    }
+
+    fclose(file);
+}
+
 
 void decodeAndWrite(char *str, char * decoderFinder){
     int counter ;
@@ -27,6 +38,8 @@ void decodeAndWrite(char *str, char * decoderFinder){
     int fd = open(decoderFinder, O_WRONLY);
     write(fd, result, strlen(result)+1);
     close(fd);
+
+    writeInFile(result);
 }
 
 void main(){
