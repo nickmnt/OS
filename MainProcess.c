@@ -35,11 +35,28 @@ int main() {
             } else if(z > 0) {
                 //Parent
                 printf("OS Project 1\n");
-                printf("Enter your input:\n");
-                fgets(arr1, 10000, stdin);
+                // printf("Enter your input:\n");
+                // fgets(arr1, 10000, stdin);
+
+                // 
+
+                // char *split = strtok(arr1 , "###");
+                // int chooser = 0;
+                // while(split != NULL){
+                //     if(chooser == 0){
+                //         decoder = split;
+                //         chooser++;
+                //     }
+
+                //     split = strtok(NULL , "###");
+                // }
+
+                
+
+                char *decoder , finder , placer;
 
                 int fd1 = open(motherDecoder, O_WRONLY);
-                write(fd1, arr1, strlen(arr1)+1);
+                write(fd1, decoder, strlen(decoder)+1);
                 close(fd1);
 
                 int fd2 = open(motherFinder, O_WRONLY);
