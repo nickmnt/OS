@@ -6,31 +6,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-void setToSingleLine(char *str){
-    int i , j, len = strlen(str);
-    for(i = 0 ; i < len ; i++){
-        if(str[i] == '\n')
-		{
-			for(j = i; j < len; j++)
-			{
-				str[j] = str[j + 1];
-			}
-			len--;
-			i--;	
-		}
-    }
-}
 
 void decodeAndWrite(char *str, char * decoderFinder){
     int counter ;
-
-    puts(str);
-    puts("before");
-
-    setToSingleLine(str);
-
-    puts("after");
-    puts(str);
 
     char result[strlen(str)-1];
 
@@ -65,7 +43,7 @@ void main(){
     //dummy input
     //char *string = "afklakgKHSFLgasfaf"; 
     char *string = arr1; 
-    printf("\nDecoder run .");
+    printf("\nDecoder run .\n");
 
-    decodeAndWrite("abc\ndef", decoderFinder);
+    decodeAndWrite(string, decoderFinder);
 }
