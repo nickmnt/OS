@@ -10,6 +10,9 @@ int main() {
     char * motherPlacer = "/tmp/fifo3";
     mkfifo(motherPlacer, 0666);
 
+    char * placerMother = "/tmp/fifo6";
+    mkfifo(motherPlacer, 0666);
+
     char * finderPlacer = "/tmp/fifo5";
     mkfifo(finderPlacer, 0666);
 
@@ -25,4 +28,27 @@ int main() {
     close(fd);
 
     printf("\nPlacer finished reading from finder: %s\n", arr2);
+
+    char result[10000];
+    int len = 0;
+
+    int pointer = 0;
+
+    int count = 0;
+
+    for(int i = 0; i < strlen(arr1); ++i) {
+        if(arr1[i] == '$') {
+            while(arr2[pointer] != ' ') {
+                result[count++] = arr2[pointer++];
+            }
+            pointer++;
+        } else {
+            result[count++] = arr1[i];
+        }
+    }
+    result[count] = '\0';
+
+    fd = open(placerMother, O_WRONLY);
+    write(fd, result, strlen(result)+1);
+    close(fd);
 }

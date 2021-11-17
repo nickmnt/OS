@@ -10,12 +10,14 @@ int main() {
     char * motherDecoder = "/tmp/fifo1";
     char * motherFinder = "/tmp/fifo2";
     char * motherPlacer = "/tmp/fifo3";
+    char * placerMother = "/tmp/fifo6";
 
     mkfifo(motherDecoder, 0666);
     mkfifo(motherFinder, 0666);
     mkfifo(motherPlacer, 0666);
+    mkfifo(placerMother, 0666);
 
-    char arr1[10000];
+    char arr1[10000], arr2[10000];
 
     pid_t x = fork();
     if(x < 0) {
@@ -98,7 +100,11 @@ int main() {
                 write(fd3, placer, strlen(placer)+1);
                 close(fd3);
 
-                printf("\nParent finished writing to pipes, should add option to get information from placer later on?\n");
+                printf("\nParent finished writing to pipes.\n");
+                int fd4 = open(placerMother, O_RDONLY);
+                read(fd4, arr2, sizeof(arr2));
+                close(fd4);
+                printf("\nParent received result from placer: %s\n", arr2);
             } else {
                 //Placer
                 char *args[] = {"placer", "C", "Programming", NULL};
