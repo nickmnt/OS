@@ -21,12 +21,12 @@ void decodeAndWrite(char *str, char * decoderFinder){
         }
     }
 
-    puts(result);
+    //puts(result);
 
     //output
     int fd = open(decoderFinder, O_WRONLY);
     write(fd, result, strlen(result)+1);
-
+    close(fd);
 }
 
 void main(){

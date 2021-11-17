@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-void splitNumbers(char *str , char *str2){
+void splitNumbers(char *str , char *str2, char * finderPlacer){
     
     int count = 0 , j = 0 , i;
     char result[1000][10] ;
@@ -43,7 +43,12 @@ void splitNumbers(char *str , char *str2){
     }
 
     //send words to placer with pipe
-    puts(words);
+    //puts(words);
+
+    //output
+    int fd = open(finderPlacer, O_WRONLY);
+    write(fd, words, strlen(words)+1);
+    close(fd);
 }
 
 int main() {
@@ -53,21 +58,23 @@ int main() {
     char * decoderFinder = "/tmp/fifo4";
     mkfifo(decoderFinder, 0666);
 
+    char * finderPlacer = "/tmp/fifo5";
+    mkfifo(finderPlacer, 0666);
+
     char arr1[10000], arr2[10000];
     int fd = open(motherFinder, O_RDONLY);
     read(fd, arr1, sizeof(arr1));
     close(fd);
 
-    printf("\nFinder finished reading from mother.\n");
-    printf("%s\n", arr1);
+    printf("\nFinder finished reading from mother: %s\n", arr1);
 
     fd = open(decoderFinder, O_RDONLY);
     read(fd, arr2, sizeof(arr2));
     close(fd);
 
-    printf("\nFinder finished reading from decoder\n");
+    printf("\nFinder finished reading from decoder: %s\n", arr2);
 
     char *string = arr1 , *string2 = arr2;
 
-    splitNumbers(string , string2);
+    splitNumbers(string , string2, finderPlacer);
 }

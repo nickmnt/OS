@@ -98,7 +98,7 @@ int main() {
                 write(fd3, placer, strlen(placer)+1);
                 close(fd3);
 
-                printf("\nParent finished writing to pipes, should add option to get information from placer later on?");
+                printf("\nParent finished writing to pipes, should add option to get information from placer later on?\n");
             } else {
                 //Placer
                 char *args[] = {"placer", "C", "Programming", NULL};
