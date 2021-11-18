@@ -25,10 +25,10 @@ void decodeAndWrite(char *str, char * decoderFinder){
 
     for(counter = 0 ; counter < strlen(str); counter++){
         if(str[counter] >= 'a' && str[counter] <= 'z'){
-            result[counter] = (str[counter]-'a'-3+26)%26+'a';
+            result[counter] = (str[counter]-'a'+3+26)%26+'a';
         }
         else if(str[counter] >= 'A' && result[counter] <= 'Z'){
-            result[counter] = (str[counter]-'A'-3+26)%26+'A';
+            result[counter] = (str[counter]-'A'+3+26)%26+'A';
         }
     }
 
