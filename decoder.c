@@ -6,6 +6,17 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+void writeInFile(char *str){
+    FILE *file ;
+    file = fopen("../decoderResult.txt" , "w");
+
+    if(file != NULL){
+        fputs(str , file);
+    }
+
+    fclose(file);
+}
+
 
 void decodeAndWrite(char *str, char * decoderFinder){
     int counter ;
@@ -14,10 +25,10 @@ void decodeAndWrite(char *str, char * decoderFinder){
 
     for(counter = 0 ; counter < strlen(str); counter++){
         if(str[counter] >= 'a' && str[counter] <= 'z'){
-            result[counter] = (str[counter]-'a'-3+26)%26+'a';
+            result[counter] = (str[counter]-'a'+3+26)%26+'a';
         }
         else if(str[counter] >= 'A' && result[counter] <= 'Z'){
-            result[counter] = (str[counter]-'A'-3+26)%26+'A';
+            result[counter] = (str[counter]-'A'+3+26)%26+'A';
         }
     }
 
@@ -27,6 +38,8 @@ void decodeAndWrite(char *str, char * decoderFinder){
     int fd = open(decoderFinder, O_WRONLY);
     write(fd, result, strlen(result)+1);
     close(fd);
+
+    writeInFile(result);
 }
 
 void main(){

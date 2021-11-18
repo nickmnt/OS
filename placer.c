@@ -6,6 +6,17 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+void writeInFile(char *str){
+    FILE *file ;
+    file = fopen("../placerResult.txt" , "w");
+
+    if(file != NULL){
+        fputs(str , file);
+    }
+
+    fclose(file);
+}
+
 int main() {
     char * motherPlacer = "/tmp/fifo3";
     mkfifo(motherPlacer, 0666);
@@ -51,4 +62,6 @@ int main() {
     fd = open(placerMother, O_WRONLY);
     write(fd, result, strlen(result)+1);
     close(fd);
+
+    writeInFile(result);
 }

@@ -6,6 +6,17 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+void writeInFile(char *str){
+    FILE *file ;
+    file = fopen("../finderResult.txt" , "w");
+
+    if(file != NULL){
+        fputs(str , file);
+    }
+
+    fclose(file);
+}
+
 void splitNumbers(char *str , char *str2, char * finderPlacer){
     
     int count = 0 , j = 0 , i;
@@ -22,13 +33,13 @@ void splitNumbers(char *str , char *str2, char * finderPlacer){
         }
     }
 
+
     int resCounter = 0 ;
     char words[strlen(str2)];
 
-    for(i = 0 ; i < count ; i++){
+    for(i = 0 ; i <= count ; i++){
         char *split1 = strtok(result[i] , " ");
         char *split2 = strtok(NULL , " ");
-
         int startIdx = atoi(split1);
         int length = atoi(split2);
 
@@ -42,8 +53,8 @@ void splitNumbers(char *str , char *str2, char * finderPlacer){
         resCounter++;
     }
 
-    //send words to placer with pipe
-    //puts(words);
+
+    writeInFile(words);
 
     //output
     int fd = open(finderPlacer, O_WRONLY);
