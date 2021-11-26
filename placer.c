@@ -57,8 +57,8 @@ int main() {
             result[count++] = arr1[i];
         }
     }
-    //result[count] = '\0';
-
+    result[count] = '\0';
+    
     writeInFile(result);
     
     fd = open(placerMother, O_WRONLY);
