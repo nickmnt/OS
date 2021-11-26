@@ -74,22 +74,19 @@ int main() {
                 }
 
                 int len = strlen(decoder);
-                int i , j;
+                int i , j = 0;
+                char refinedDecoder[10000];
                 for(i = 0; i < len; i++)
                 {
-                    if(decoder[i] == '\n')
+                    if((decoder[i] >= 'a' && decoder[i] <= 'z') || (decoder[i] >= 'A' && decoder[i] <= 'Z'))
                     {
-                        for(j = i; j < len; j++)
-                        {
-                            decoder[j] = decoder[j + 1];
-                        }
-                        len--;
-                        i--;	
+                        refinedDecoder[j++] = decoder[i];
                     } 
                 }
+                refinedDecoder[j] = '\0';
 
                 int fd1 = open(motherDecoder, O_WRONLY);
-                write(fd1, decoder, strlen(decoder)+1);
+                write(fd1, refinedDecoder, strlen(refinedDecoder)+1);
                 close(fd1);
 
                 int fd2 = open(motherFinder, O_WRONLY);

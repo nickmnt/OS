@@ -19,18 +19,21 @@ void writeInFile(char *str){
 
 
 void decodeAndWrite(char *str, char * decoderFinder){
-    int counter ;
+    int counter, j = 0;
 
     char result[strlen(str)-1];
 
     for(counter = 0 ; counter < strlen(str); counter++){
         if(str[counter] >= 'a' && str[counter] <= 'z'){
-            result[counter] = (str[counter]-'a'+3+26)%26+'a';
+            result[j++] = (str[counter]-'a'+3+26)%26+'a';
         }
-        else if(str[counter] >= 'A' && result[counter] <= 'Z'){
-            result[counter] = (str[counter]-'A'+3+26)%26+'A';
-        }
+        else if(str[counter] >= 'A' && str[counter] <= 'Z'){
+            result[j++] = (str[counter]-'A'+3+26)%26+'A';
+        } //else {
+            //printf("ERROR!: %c\n", str[counter]);
+        //}
     }
+    result[j] = '\0';
 
     //puts(result);
 
@@ -56,7 +59,7 @@ void main(){
     //dummy input
     //char *string = "afklakgKHSFLgasfaf"; 
     char *string = arr1; 
-    printf("\nDecoder run .\n");
+    printf("\nDecoder finished reading from mother: %s\n", arr1);
 
     decodeAndWrite(string, decoderFinder);
 }
