@@ -49,7 +49,7 @@ int main() {
 
     for(int i = 0; i < strlen(arr1); ++i) {
         if(arr1[i] == '$') {
-            while(arr2[pointer] != ' ') {
+            while(arr2[pointer] != ' ' && arr2[pointer] != '\0') {
                 result[count++] = arr2[pointer++];
             }
             pointer++;
@@ -57,11 +57,13 @@ int main() {
             result[count++] = arr1[i];
         }
     }
-    result[count] = '\0';
+    //result[count] = '\0';
 
+    writeInFile(result);
+    
     fd = open(placerMother, O_WRONLY);
     write(fd, result, strlen(result)+1);
     close(fd);
 
-    writeInFile(result);
+    
 }

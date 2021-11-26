@@ -49,10 +49,12 @@ void splitNumbers(char *str , char *str2, char * finderPlacer){
             words[resCounter] = str2[k];
             resCounter++;
         }
+
         words[resCounter] = ' ';
         resCounter++;
     }
-
+    //Last space is extra
+    words[resCounter-1] = '\0';
 
     writeInFile(words);
 
